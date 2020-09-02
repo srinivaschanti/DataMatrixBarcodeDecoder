@@ -7,8 +7,8 @@ namespace DataMatrixBarcodeDecoder.Model
     public class DataMatrix
     {
         public string GTIN { get; set; }
-        public string PurchaseOrderNumber { get; set; }
-        public string SeasonYear { get; set; }
+        public string PurchaseOrder { get; set; }
+        public string Season { get; set; }
         public string SerialNumber { get; set; }
         public string CountryOfOrigin { get; set; }
 

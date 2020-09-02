@@ -5,31 +5,23 @@ namespace DataMatrixBarcodeDecoder
 {
     class Program
     {
+        //Example DataMatrix Barcode
+        //010731392734276810780814240921151153067776241US
         static void Main(string[] args)
         {
             Decoder decodeBarcode = new Decoder();
             DataMatrix data = new DataMatrix();
             Console.WriteLine("Enter Barcode");
             string barcode = Console.ReadLine();
-            var arr = decodeBarcode.ParseBarcode(barcode);
-
-            data.GTIN = arr[0][1];
-            data.PurchaseOrderNumber = arr[1][1];
-            data.SeasonYear = arr[2][1];
-            data.SerialNumber = arr[3][1];
-            data.CountryOfOrigin = arr[4][1];
-
-            //for(int i = 0; i<arr.Length; i++)
-            //{
-            //    var result = arr[i];
-            //    Console.WriteLine($"({result[0]}){result[1]}");
-            //}
-
-            Console.WriteLine(data.GTIN);
-            Console.WriteLine(data.PurchaseOrderNumber);
-            Console.WriteLine(data.SeasonYear);
-            Console.WriteLine(data.SerialNumber);
-            Console.WriteLine(data.CountryOfOrigin);
+            data = decodeBarcode.ParseBarcode(barcode);
+            
+            Console.WriteLine("");
+            Console.WriteLine("Decoded Barcode Values:");
+            Console.WriteLine($"GTIN: {data.GTIN}");
+            Console.WriteLine($"Purchase Order Number: {data.PurchaseOrder}");
+            Console.WriteLine($"Season: {data.Season}");
+            Console.WriteLine($"Serial Number: {data.SerialNumber}");
+            Console.WriteLine($"Country of Origin: {data.CountryOfOrigin}");
             Console.ReadKey();
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataMatrixBarcodeDecoder.Model;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -14,8 +15,9 @@ namespace DataMatrixBarcodeDecoder
                                 new string[] { "21", "Searial Number", "12", "12", "numeric", "false"},
                                 new string[] { "241", "Country of Origin", "2", "2", "alphanumeric", "false"}                                
                               };
-        public string[][] ParseBarcode(string barcode)
-        {            
+        public DataMatrix ParseBarcode(string barcode)
+        {
+            DataMatrix decodeResult = new DataMatrix();
             int arrayIndex = 0;
             string[][] arrAIs = new string[arrKnownAIs.Length][];
 
@@ -42,11 +44,29 @@ namespace DataMatrixBarcodeDecoder
                     barcode = Regex.Replace(barcode, strRegExMatch, ""); //remove the AI and its value so that its value can't be confused as another AI
                     strRegExMatch = Regex.Replace(strRegExMatch, strAI, ""); //remove the AI from the match
                     arrAIs[arrayIndex] = new string[] { strAI, strRegExMatch };
+                    switch (strAI)
+                    {
+                        case "01":
+                            decodeResult.GTIN = strRegExMatch;
+                            break;
+                        case "10":
+                            decodeResult.PurchaseOrder = strRegExMatch;
+                            break;
+                        case "240":
+                            decodeResult.Season = strRegExMatch;
+                            break;
+                        case "21":
+                            decodeResult.SerialNumber = strRegExMatch;
+                            break;
+                        case "241":
+                            decodeResult.CountryOfOrigin = strRegExMatch;
+                            break;
+                    }
                 }
                 arrayIndex++;
             }
 
-            return arrAIs;
+            return decodeResult;
         }
     }
 }
